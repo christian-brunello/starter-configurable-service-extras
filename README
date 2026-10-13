@@ -15,7 +15,13 @@ Out-of-tree helpers for `starter-configurable-service` (STCS):
 * Autotools (autoconf, automake, libtool)
 * pkg-config
 * GLib 2.44+
+* `starter-configurable-service` (pkg-config module; must be installed or
+  visible via `PKG_CONFIG_PATH`)
 * makeinfo (Texinfo), for the manual
+
+After `make install`, this package installs
+`starter-configurable-service-extras.pc` under `$libdir/pkgconfig` so other
+components can `PKG_CHECK_MODULES([…], [starter-configurable-service-extras])`.
 
 2. Build
 --------

@@ -22,6 +22,7 @@ LT_INIT
 
 PKG_PROG_PKG_CONFIG
 PKG_CHECK_MODULES([GLIB], [glib-2.0 >= 2.44])
+PKG_CHECK_MODULES([STCS], [starter-configurable-service])
 
 AC_CHECK_LIB([m], [sin], [], [AC_MSG_ERROR([libm is required])])
 
@@ -34,5 +35,6 @@ AC_CONFIG_FILES([
   Makefile
   processes/Makefile
   doc/Makefile
+  starter-configurable-service-extras.pc
 ])
 AC_OUTPUT

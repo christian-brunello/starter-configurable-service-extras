@@ -1,3 +1,6 @@
+# Generated pkg-config
+/starter-configurable-service-extras.pc
+
 # Autotools
 /autom4te.cache/
 /m4/libtool.m4

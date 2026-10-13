@@ -141,8 +141,9 @@ Typical @acronym{STCS} use: site overlay @file{sun-position.xml} with
 @node Building and Installing
 @chapter Building and Installing
 
-Prerequisites: Autotools, pkg-config, GLib 2.44 or newer, and
-@command{makeinfo}.
+Prerequisites: Autotools, pkg-config, GLib 2.44 or newer,
+@command{starter-configurable-service} (pkg-config module
+@code{starter-configurable-service}), and @command{makeinfo}.
 
 @example
 $ ./autogen.sh
@@ -150,6 +151,9 @@ $ ./configure --prefix=/usr/local
 $ make
 $ sudo make install
 @end example
+
+Install also ships @file{starter-configurable-service-extras.pc} so other
+packages can detect this one with pkg-config.
 
 Build the Info manual:
 

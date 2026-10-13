@@ -12,7 +12,11 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = processes doc
 
-EXTRA_DIST = README AUTHORS NEWS ChangeLog plugins/README.md
+EXTRA_DIST = README AUTHORS NEWS ChangeLog plugins/README.md \
+	starter-configurable-service-extras.pc.in
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = starter-configurable-service-extras.pc
 
 .PHONY: doc
 doc:
