@@ -1,0 +1,58 @@
+starter-configurable-service-extras
+===================================
+
+Out-of-tree helpers for `starter-configurable-service` (STCS):
+
+* **processes/** — small CLI programs that print JSON on stdout, typically
+  invoked via the `process-transport` plugin (e.g. `current-time`,
+  `sun-position`).
+* **plugins/** — reserved for future out-of-tree STCS `.so` plugins
+  (install path: `$libdir/starter/configurable-service/plugins`).
+
+1. Prerequisites
+----------------
+
+* Autotools (autoconf, automake, libtool)
+* pkg-config
+* GLib 2.44+
+* makeinfo (Texinfo), for the manual
+
+2. Build
+--------
+
+    $ ./autogen.sh
+    $ ./configure
+    $ make
+    $ sudo make install
+
+Binaries install to `$prefix/bin` (default `/usr/local/bin`):
+
+* `current-time`
+* `sun-position`
+
+Texinfo manual:
+
+    $ make -C doc info
+    $ info ./doc/starter-configurable-service-extras.info
+    $ make doc          # PDF, if TeX tooling is available
+
+3. Quick test
+-------------
+
+    $ ./processes/current-time
+    $ ./processes/sun-position --latitude 45.22 --longitude 12.0
+
+4. STCS configuration
+---------------------
+
+House overlays typically reference:
+
+    <command>/usr/local/bin/current-time</command>
+    <command>/usr/local/bin/sun-position</command>
+
+See the Texinfo manual for CLI and JSON details.
+
+5. License
+----------
+
+GNU General Public License version 3 or later. See COPYING.

@@ -1,0 +1,185 @@
+\input texinfo
+@c -*-texinfo-*-
+@setfilename starter-configurable-service-extras.info
+@settitle STARTER Configurable Service Extras
+@include version.texi
+
+@paragraphindent 0
+
+@copying
+This manual is for starter-configurable-service-extras (version @value{VERSION}),
+process helpers and (future) out-of-tree plugins for
+starter-configurable-service.
+
+Copyright @copyright{} 2026 Christian Brunello
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled ``GNU Free
+Documentation License''.
+@end quotation
+@end copying
+
+@dircategory System Administration
+@direntry
+* STCS Extras: (starter-configurable-service-extras).  Process helpers for STCS.
+@end direntry
+
+@titlepage
+@title STARTER Configurable Service Extras
+@subtitle Version @value{VERSION}
+@subtitle Process helpers (and future plugins) for starter-configurable-service
+@author Christian Brunello
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@ifnottex
+@node Top
+@top STARTER Configurable Service Extras
+@insertcopying
+@end ifnottex
+
+@contents
+
+@menu
+* Introduction::
+* Processes::
+* Building and Installing::
+* Plugins::
+* Copying::
+* GNU Free Documentation License::
+* GNU General Public License::
+@end menu
+
+@node Introduction
+@unnumbered Introduction
+
+@command{starter-configurable-service-extras} packages small helpers used
+with @command{starter-configurable-service} (@acronym{STCS}).
+
+Today this package ships @emph{process} programs: short-lived commands that
+print a single @acronym{JSON} object on standard output. @acronym{STCS}
+invokes them through the @code{process-transport} plugin and maps fields
+with @code{json-reader}.
+
+A @file{plugins/} tree is reserved for future out-of-tree @acronym{STCS}
+shared modules. None are included in version @value{VERSION}.
+
+For @acronym{STCS} itself, see the
+@cite{STARTER Configurable Service} documentation in the
+@command{starter-configurable-service} package.
+
+@node Processes
+@chapter Processes
+
+Both programs are installed under @file{$prefix/bin} (typically
+@file{/usr/local/bin}).
+
+@menu
+* current-time::
+* sun-position::
+@end menu
+
+@node current-time
+@section @command{current-time}
+
+Prints the local wall clock as @acronym{JSON} (no command-line options).
+
+Example:
+
+@example
+$ current-time
+@{"year": 2026, "month": 10, "day": 13, "hour": 14, "minute": 30,
+ "second": 0, "dayMinutes": 870, "daySeconds": 52200,
+ "unix": 1791893400, "UTCOffset": 7200000000, "timezone": "CEST"@}
+@end example
+
+Fields include calendar components, minutes/seconds since local midnight,
+Unix time, UTC offset (as returned by GLib), and a timezone abbreviation.
+
+Typical @acronym{STCS} use: @code{<command>/usr/local/bin/current-time</command>}
+inside a @code{process-transport} with @code{json-reader} maps onto time
+inputs (site overlay @file{current-time.xml}).
+
+@node sun-position
+@section @command{sun-position}
+
+Estimates solar azimuth and elevation for a given latitude/longitude at
+the current local time (converted to @acronym{UTC} for the calculation).
+
+Mandatory options:
+
+@table @option
+@item --latitude=@var{LAT} / @option{-a} @var{LAT}
+Reference latitude in degrees.
+@item --longitude=@var{LON} / @option{-o} @var{LON}
+Reference longitude in degrees.
+@end table
+
+Example:
+
+@example
+$ sun-position --latitude 45.223 --longitude 11.999
+@{"timestamp": 1791893400, "latitude": 45.223000, "longitude": 11.999000,
+ "azimuth": 204.360031, "elevation": 46.287419@}
+@end example
+
+@itemize @bullet
+@item @code{azimuth} — degrees from north (0° = north, 180° = south).
+@item @code{elevation} — degrees above the horizon.
+@end itemize
+
+Typical @acronym{STCS} use: site overlay @file{sun-position.xml} with
+@code{process-transport} polling on a cron expression and binding
+@code{SUN:azimuth} / @code{SUN:elevation}.
+
+@node Building and Installing
+@chapter Building and Installing
+
+Prerequisites: Autotools, pkg-config, GLib 2.44 or newer, and
+@command{makeinfo}.
+
+@example
+$ ./autogen.sh
+$ ./configure --prefix=/usr/local
+$ make
+$ sudo make install
+@end example
+
+Build the Info manual:
+
+@example
+$ make -C doc info
+@end example
+
+@node Plugins
+@chapter Plugins
+
+Directory @file{plugins/} is a placeholder for future out-of-tree
+@acronym{STCS} plugins (shared objects installed under
+@file{$libdir/starter/configurable-service/plugins}). Version
+@value{VERSION} does not ship any plugin modules.
+
+@node Copying
+@unnumbered Copying
+
+The programs are free software under the GNU General Public License
+version 3 or later; see @ref{GNU General Public License}.
+
+This manual is under the GNU Free Documentation License; see
+@ref{GNU Free Documentation License}.
+
+@node GNU Free Documentation License
+@unnumbered GNU Free Documentation License
+@include fdl.texi
+
+@node GNU General Public License
+@unnumbered GNU General Public License
+@include gpl.texi
+
+@bye

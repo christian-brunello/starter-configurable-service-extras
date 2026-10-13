@@ -1,0 +1,4 @@
+2026-10-13  Christian Brunello  <brncrs@gmail.com>
+
+	* Initial import: current-time and sun-position process helpers,
+	  Texinfo manual, autotools package starter-configurable-service-extras.
