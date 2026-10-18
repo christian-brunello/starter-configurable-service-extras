@@ -1,6 +1,11 @@
 # Generated pkg-config
 /starter-configurable-service-extras.pc
 
+# Editor / backup junk
+*~
+*.swp
+*.swo
+
 # Autotools
 /autom4te.cache/
 /m4/libtool.m4
